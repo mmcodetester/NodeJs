@@ -25,12 +25,16 @@ app.get('/login',(req,res)=>{
 app.post('/login',async(req,res)=>{
    await User.findOne({name: req.body.name}).then((result)=>{
        if(result.password==req.body.password){
-           res.render('dashboard');
+           res.redirect(`/${result._id}`);
        }
        else{
            res.redirect('/login');
        }
    })
+})
+
+app.get('/:id', (req, res) => {
+    res.render('dashboard')
 })
 
 app.listen(port,(error)=>{
