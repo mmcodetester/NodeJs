@@ -73,10 +73,10 @@ app.get('/user/5f87e4443d9406180ccc1703/post',async(req,res)=>{
     
 })
 
-app.post('/user/post/upload',upload.single('profile'), async (req, res)=> {
+app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (req, res)=> {
     message : "Error! in image upload."
       if (!req.file) {
-          console.log("No file received");
+          //console.log("No file received");
             message = "Error! in image upload."
           res.render('index',{message: message, status:'danger'});
       
