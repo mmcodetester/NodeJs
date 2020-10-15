@@ -66,7 +66,7 @@ app.get('/:id', (req, res) => {
     res.render('dashboard')
 })
 
-app.get('/user/post',async(req,res)=>{
+app.get('/user/5f87e4443d9406180ccc1703/post',async(req,res)=>{
     await Post.find().then((result) => {
         res.render('post',{result: result});
     })
