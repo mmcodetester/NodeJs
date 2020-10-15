@@ -62,6 +62,7 @@ app.post('/login',async(req,res)=>{
 })
 
 app.get('/:id', (req, res) => {
+    const id=req.params.id;
     res.render('dashboard')
 })
 
