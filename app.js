@@ -96,6 +96,16 @@ app.post('/user/post/upload',upload.single('profile'), async (req, res)=> {
         }
   });
 
+  app.get('/user/5f87e4443d9406180ccc1703/post/delete/:id',async(req, res)=>{
+      const id=req.params.id;
+    await Post.findOneAndDelete({_id:id}).then((success)=>{
+        if(success){
+            
+            res.redirect('/user/5f87e4443d9406180ccc1703/post');
+        }
+    })
+  })
+
 app.listen(port,(error)=>{
     if(error){
         console.log(error);
