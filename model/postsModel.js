@@ -13,6 +13,11 @@ const PostSchema=new Schema({
     image:{
         type: String,
         required: true
+    },
+    date: { 
+        type: Date, 
+        required: true, 
+        default: Date.now 
     }
 });
 const Post=mongoose.model('post',PostSchema);

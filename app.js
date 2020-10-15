@@ -36,7 +36,7 @@ let storage = multer.diskStorage({
  
 let upload = multer({storage: storage});
 app.get('/',async(req,res)=>{
-   const data=await Post.find();
+   const data=await Post.find().sort({date:-1});
    console.log(data);
     if(data){
         res.render('index',{
@@ -67,7 +67,7 @@ app.get('/:id', (req, res) => {
 })
 
 app.get('/user/5f87e4443d9406180ccc1703/post',async(req,res)=>{
-    await Post.find().then((result) => {
+    await Post.find().sort({date:-1}).then((result) => {
         res.render('post',{result: result});
     })
     
@@ -81,8 +81,8 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
           res.render('index',{message: message, status:'danger'});
       
         } else {
-          console.log('file received');
-          console.log(req.file.filename);
+         // console.log('file received');
+         // console.log(req.file.filename);
             const post=new Post({
                 title:req.body.title,
                 body:req.body.body,
@@ -99,7 +99,6 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
       const id=req.params.id;
     await Post.findOneAndDelete({_id:id}).then((success)=>{
         if(success){
-
             res.redirect('/user/5f87e4443d9406180ccc1703/post');
         }
     })
