@@ -90,7 +90,7 @@ app.post('/user/post/upload',upload.single('profile'), async (req, res)=> {
             });
             await post.save().then((data) => {
                 if(data){
-                    req.redirect('/user/posts');
+                    req.redirect('/user/5f87e4443d9406180ccc1703/post');
                 }
             })
         }
