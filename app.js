@@ -88,11 +88,10 @@ app.post('/user/post/upload',upload.single('profile'), async (req, res)=> {
                 body:req.body.body,
                 image:req.file.filename
             });
-            await post.save().then((data) => {
-                if(data){
-                    req.redirect('/');
-                }
-            })
+            const resdata=await post.save();
+            if(resdata){
+                res.redirect('/user/5f87e4443d9406180ccc1703/post');
+            }
         }
   });
 
