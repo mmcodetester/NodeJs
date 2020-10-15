@@ -37,6 +37,10 @@ app.get('/:id', (req, res) => {
     res.render('dashboard')
 })
 
+app.get('/user/post',(req,res)=>{
+    res.render('post');
+})
+
 app.listen(port,(error)=>{
     if(error){
         console.log(error);
