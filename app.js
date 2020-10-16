@@ -137,10 +137,10 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
 
       });
       console.log(req.body.grade);
-    await Grade.findOne({name:req.body.grade},{"__v":0}).then((data)=>{
+    await Grade.findOne({name:req.body.grade},{"__v":0}).then(async(data)=>{
         if(data){
             newStudent.grade.push(data);
-            newStudent.save().then((result)=>{
+           await newStudent.save().then((result)=>{
                 res.redirect('/user/5f87e4443d9406180ccc1703/student');
             })
         }
