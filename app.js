@@ -3,6 +3,8 @@ var port = process.env.PORT ||3000;
 const bodyParser = require('body-parser');
 const User = require('./model/userModel');
 const Post=require('./model/postsModel');
+const Grade = require('./model/gradeModel');
+const Student = require('./model/studentModel');
 require('./config/database');
 const path = require('path');
 const hbs=require('express-handlebars');
@@ -37,7 +39,7 @@ let storage = multer.diskStorage({
 let upload = multer({storage: storage});
 app.get('/',async(req,res)=>{
    const data=await Post.find().sort({date:-1});
-   console.log(data);
+   //console.log(data);
     if(data){
         res.render('index',{
             results: data
@@ -103,6 +105,61 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
         }
     })
   })
+
+  app.get('/user/5f87e4443d9406180ccc1703/grade',async(req,res)=>{
+      const data=await Grade.find({},{"__v":0});
+      if(data){
+          res.json(data);
+      }
+  });
+  app.get('/user/5f87e4443d9406180ccc1703/student',async(req,res)=>{
+    await Student.find({},{"__v":0}).populate('grade').exec((err,data)=>{
+        //console.log(data);
+        res.render('student',{result: data});
+        });
+    })
+
+    app.get('/user/5f87e4443d9406180ccc1703/student/new',async(req,res)=>{
+        await Grade.find({},{"__id":0}).then((grade)=>{
+            if(grade){
+                //console.log(grade);
+                res.render('newStudent',{result:grade});
+            }
+        })
+    })
+
+  app.post('/user/5f87e4443d9406180ccc1703/student/new',async(req,res)=>{
+      const newStudent=new Student({
+          name: req.body.name,
+          dob:req.body.dob,
+          fatherName:req.body.fatherName,
+          motherName:req.body.motherName
+
+      });
+      console.log(req.body.grade);
+    await Grade.findOne({name:req.body.grade},{"__v":0}).then((data)=>{
+        if(data){
+            newStudent.grade.push(data);
+            newStudent.save().then((result)=>{
+                res.redirect('/user/5f87e4443d9406180ccc1703/student');
+            })
+        }
+        else{
+            const newGrade =new Grade({
+                name:req.body.grade
+            })
+           const data=newGrade.save();
+           if(data){
+            newStudent.grade.push(data);
+            newStudent.save().then((result)=>{
+                res.redirect('/user/5f87e4443d9406180ccc1703/student');
+            })
+           }
+        }
+    })
+}) 
+
+ 
 
 app.listen(port,(error)=>{
     if(error){

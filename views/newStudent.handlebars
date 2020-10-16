@@ -1,0 +1,60 @@
+<div class="card">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1><a href="/user/5f87e4443d9406180ccc1703/student"><i class="fa fa-arrow-left"></i></a>&nbsp;&nbsp;Student</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href=""></a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-7 mb-7">
+            <div class="login-form">
+                <form method="post" action="/user/5f87e4443d9406180ccc1703/student/new">
+                    <div class="form-group">
+                        <label>Student Name</label>
+                        <input type="text" class="form-control" placeholder="" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label>Date Of Birth</label>
+                        <input type="text" class="form-control" placeholder="" name="dob">
+                    </div>
+                    <div class="form-group">
+                        <label>Father Name</label>
+                        <input type="text" class="form-control" placeholder="" name="fatherName">
+                    </div>
+                    <div class="form-group">
+                        <label>Mother Name</label>
+                        <input type="text" class="form-control" placeholder="" name="motherName">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Grade</label>
+                        <select name="grade" id="selectLg" class="form-control-lg form-control">
+                            <option value="0">select grade</option>
+                            {{#each result}}
+                            <option value="{{name}}">{{name}}</option>
+                               {{/each}}
+                        </select>
+                    </div>
+                 
+                    <button type="submit" class="btn btn-success btn-flat m-b-30 m-t-30">Sign in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
