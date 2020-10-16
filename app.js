@@ -136,13 +136,14 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
           motherName:req.body.motherName
 
       });
-      console.log(req.body.grade);
-    await Grade.findOne({name:req.body.grade},{"__v":0}).then(async(data)=>{
+     // console.log(req.body.grade);
+    await Grade.findOne({name:req.body.grade},{"__v":0}).then((data)=>{
         if(data){
             newStudent.grade.push(data);
-           await newStudent.save().then((result)=>{
-                res.redirect('/user/5f87e4443d9406180ccc1703/student');
-            })
+           const dt= newStudent.save();
+           if(dt){
+            res.redirect('/user/5f87e4443d9406180ccc1703/student');
+           }
         }
         else{
             const newGrade =new Grade({
