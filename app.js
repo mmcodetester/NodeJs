@@ -136,7 +136,8 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
           motherName:req.body.motherName
 
       });
-     // console.log(req.body.grade);
+      try {
+         // console.log(req.body.grade);
     await Grade.findOne({name:req.body.grade},{"__v":0}).then((data)=>{
         if(data){
             newStudent.grade.push(data);
@@ -157,7 +158,11 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
             })
            }
         }
-    })
+        })
+      }catch(e) {
+          console.log(e.message)
+      }
+    
 }) 
 
  
