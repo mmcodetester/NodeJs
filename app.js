@@ -24,8 +24,10 @@ app.engine('handlebars', hbs({
 
     }
 }));
+
 app.set('view engine', 'handlebars');
 app.use('/static', express.static(path.join(__dirname, 'public')))
+
 const DIR = './public/uploads';
 let storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -37,6 +39,8 @@ let storage = multer.diskStorage({
 });
  
 let upload = multer({storage: storage});
+
+//**************||************************POST GET ALL VIEW************************************||*****************\\
 app.get('/',async(req,res)=>{
    const data=await Post.find().sort({date:-1});
    //console.log(data);
@@ -55,7 +59,7 @@ app.get('/api',async(req,res)=>{
      }
      
  })
-
+//*****************||*******************************************Part of Login**************************************||*************\\
 app.get('/login',(req,res)=>{
     res.render('login');
 })
@@ -91,7 +95,7 @@ app.get('/:id', (req, res) => {
     res.render('dashboard')
 })
 
-//part of post
+//*************||********************************part of post**********************************||***************\\
 
 app.get('/user/5f87e4443d9406180ccc1703/post',async(req,res)=>{
     await Post.find().sort({date:-1}).then((result) => {
@@ -131,7 +135,7 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
     })
   })
 
-  //Part of Grade
+  //*****************||*******************************Part of Grade*******************************||******************\\
 
   app.get('/user/5f87e4443d9406180ccc1703/grade',async(req,res)=>{
       const data=await Grade.find({},{"__v":0});
@@ -139,6 +143,7 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
           res.json(data);
       }
   });
+
   app.post('/api/user/grade',async(req,res)=>{
    const newGrade=new Grade({
        name:req.body.name, 
@@ -160,7 +165,17 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
     }
 });
 
-//Part of Student
+app.get('/api/user/grade/:id',async(req,res)=>{
+    await Grade.findOneAndDelete({_id:id}).then((success)=>{
+        if(success){
+            res.json({
+                message:"delete success"
+            })
+        }
+    })
+});
+
+//*************||**********************************Part of Student******************************||****************\\
   app.get('/user/5f87e4443d9406180ccc1703/student',async(req,res)=>{
     await Student.find({},{"__v":0}).populate('grade').exec((err,data)=>{
         //console.log(data);
@@ -220,7 +235,7 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
       }
     
 })  
-//server listen mode 
+//************||*****************************server listen mode********************************||*****************\\ 
 app.listen(port,(error)=>{
     if(error){
         console.log(error);
