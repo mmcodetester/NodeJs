@@ -135,6 +135,20 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
           res.json(data);
       }
   });
+  app.post('/api/user/grade',async(req,res)=>{
+   const newGrade=new Grade({
+       name:req.body.name, 
+       delete:'0'
+    })
+    await newGrade.save().exec().then((result)=>{
+        if(result){
+            res.json({
+                message:'success insert',
+                result:result
+            })
+        }
+    })
+});
   app.get('/api/user/grade',async(req,res)=>{
     const data=await Grade.find({},{"__v":0});
     if(data){
