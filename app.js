@@ -91,6 +91,8 @@ app.get('/:id', (req, res) => {
     res.render('dashboard')
 })
 
+//part of post
+
 app.get('/user/5f87e4443d9406180ccc1703/post',async(req,res)=>{
     await Post.find().sort({date:-1}).then((result) => {
         res.render('post',{result: result});
@@ -129,6 +131,8 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
     })
   })
 
+  //Part of Grade
+
   app.get('/user/5f87e4443d9406180ccc1703/grade',async(req,res)=>{
       const data=await Grade.find({},{"__v":0});
       if(data){
@@ -140,7 +144,7 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
        name:req.body.name, 
        delete:'0'
     })
-    await newGrade.save().exec().then((result)=>{
+    await newGrade.save().then((result)=>{
         if(result){
             res.json({
                 message:'success insert',
@@ -155,6 +159,8 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
         res.json(data);
     }
 });
+
+//Part of Student
   app.get('/user/5f87e4443d9406180ccc1703/student',async(req,res)=>{
     await Student.find({},{"__v":0}).populate('grade').exec((err,data)=>{
         //console.log(data);
@@ -213,10 +219,8 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
           console.log(e.message)
       }
     
-}) 
-
- 
-
+})  
+//server listen mode 
 app.listen(port,(error)=>{
     if(error){
         console.log(error);
