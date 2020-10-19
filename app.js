@@ -186,7 +186,7 @@ app.get('/api/user/grade/:id',async(req,res)=>{
     app.get('/api/user/student',async(req,res)=>{
         await Student.find({},{"__v":0}).populate('grade').exec((err,data)=>{
             //console.log(data);
-            res.render('student',{result: data});
+            res.json(data);
             });
         })
 
