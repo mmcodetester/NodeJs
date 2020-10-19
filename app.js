@@ -47,6 +47,14 @@ app.get('/',async(req,res)=>{
     }
     
 })
+app.get('/api',async(req,res)=>{
+    const data=await Post.find().sort({date:-1});
+    //console.log(data);
+     if(data){
+       res.json(data);
+     }
+     
+ })
 
 app.get('/login',(req,res)=>{
     res.render('login');
@@ -62,6 +70,21 @@ app.post('/login',async(req,res)=>{
        }
    })
 })
+
+app.post('/api/login',async(req,res)=>{
+    await User.findOne({name: req.body.name}).then((result)=>{
+        if(result.password==req.body.password){
+            res.json({
+                message:"liogin success"
+            });
+        }
+        else{
+           res.json({
+               message:"login fails"
+           })
+        }
+    })
+ })
 
 app.get('/:id', (req, res) => {
     const id=req.params.id;
@@ -112,12 +135,25 @@ app.post('/user/5f87e4443d9406180ccc1703/post',upload.single('profile'), async (
           res.json(data);
       }
   });
+  app.get('/api/user/grade',async(req,res)=>{
+    const data=await Grade.find({},{"__v":0});
+    if(data){
+        res.json(data);
+    }
+});
   app.get('/user/5f87e4443d9406180ccc1703/student',async(req,res)=>{
     await Student.find({},{"__v":0}).populate('grade').exec((err,data)=>{
         //console.log(data);
         res.render('student',{result: data});
         });
     })
+
+    app.get('/api/user/student',async(req,res)=>{
+        await Student.find({},{"__v":0}).populate('grade').exec((err,data)=>{
+            //console.log(data);
+            res.render('student',{result: data});
+            });
+        })
 
     app.get('/user/5f87e4443d9406180ccc1703/student/new',async(req,res)=>{
         await Grade.find({},{"__id":0}).then((grade)=>{
