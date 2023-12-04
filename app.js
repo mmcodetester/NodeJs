@@ -42,12 +42,10 @@ let upload = multer({storage: storage});
 
 //**************||************************POST GET ALL VIEW************************************||*****************\\
 app.get('/',async(req,res)=>{
-   const data=await Post.find().sort({date:-1});
+   //const data=await Post.find().sort({date:-1});
    //console.log(data);
     if(data){
-        res.render('index',{
-            results: data
-          });
+        res.render('index');
     }
     
 })
